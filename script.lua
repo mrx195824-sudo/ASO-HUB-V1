@@ -1,52 +1,108 @@
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+herelocal OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
-local Window = Fluent:CreateWindow({
-    Title = "👑 ASO HUB | THE G.O.A.T",
-    SubTitle = "إصدار الاندماج الشامل 2026",
-    TabWidth = 160,
-    Size = UDim2.fromOffset(580, 460),
-    Acrylic = false, 
-    Theme = "Black", 
-    MinimizeKey = Enum.KeyCode.LeftControl
+local Window = OrionLib:MakeWindow({
+    Name = "👑 ASO HUB | CUSTOM PRO", 
+    HidePremium = false, 
+    SaveConfig = true, 
+    ConfigFolder = "ASOCustom",
+    IntroText = "جاري تشغيل نظام النينجا..."
 })
 
-Fluent.Options = { AccentColor = Color3.fromRGB(0, 51, 153) }
+-- [[ قسم التصميم - هنا تتحكم بكل شيء ]]
+local SettingsTab = Window:MakeTab({
+    Name = "🎨 الألوان",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
 
-local Tabs = {
-    Main = Window:AddTab({ Title = "اللاعب", Icon = "user" }),
-    Brook = Window:AddTab({ Title = "بروكهافن", Icon = "home" }),
-    Teleport = Window:AddTab({ Title = "انتقالات", Icon = "map-pin" }),
-    Troll = Window:AddTab({ Title = "تخريب", Icon = "zap" }),
-    Global = Window:AddTab({ Title = "مكتبة الهكرز", Icon = "layers" })
-}
+SettingsTab:AddColorpicker({
+    Name = "لون الواجهة (Theme)",
+    Default = Color3.fromRGB(0, 51, 153),
+    Callback = function(Value)
+        -- هذا الكود يغير لك الثيم فوراً وأنت تتفرج
+        _G.WindowColor = Value
+        OrionLib:MakeNotification({
+            Name = "تم التغيير!",
+            Content = "اللون الجديد شغال يا بطل",
+            Image = "rbxassetid://4483345998",
+            Time = 3
+        })
+    end	  
+})
 
 -- [[ قسم اللاعب ]]
-Tabs.Main:AddSlider("WalkSpeed", { Title = "السرعة", Default = 16, Min = 16, Max = 1000, Rounding = 1, Callback = function(V) game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = V end })
-Tabs.Main:AddButton({ Title = "🚀 طيران (Fly GUI)", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.lua"))() end })
-Tabs.Main:AddButton({ Title = "🧛 نسخ سكن متطور", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/IceSpices/mop-hub/main/SkinCopy.lua"))() end })
+local PlayerTab = Window:MakeTab({
+    Name = "👤 اللاعب",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
 
--- [[ قسم بروكهافن - السيارات والخدمات ]]
-Tabs.Brook:AddButton({ Title = "🚗 فتح جميع السيارات (Gamepass)", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/IceSpices/mop-hub/main/Brookhaven.lua"))() end })
-Tabs.Brook:AddButton({ Title = "🏡 سكربت P_97 & Mops", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/p97-sudo/P97-Hub/main/Brookhaven.lua"))() end })
-Tabs.Brook:AddButton({ Title = "💰 سرقة الخزنات (Auto Rob)", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/GhostPlayer352/Test4/main/AutoRob"))() end })
+PlayerTab:AddSlider({
+    Name = "السرعة",
+    Min = 16,
+    Max = 1000,
+    Default = 16,
+    Color = Color3.fromRGB(255,255,255),
+    Increment = 1,
+    ValueName = "Speed",
+    Callback = function(Value)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+    end    
+})
 
--- [[ قسم الانتقالات - من صورك الجديدة ]]
-Tabs.Teleport:AddButton({ Title = "🏦 البنك (Bank)", Callback = function() game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-442, 23, -283) end })
-Tabs.Teleport:AddButton({ Title = "🏥 المستشفى (Hospital)", Callback = function() game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-489, 23, -114) end })
-Tabs.Teleport:AddButton({ Title = "👮 مركز الشرطة (Police)", Callback = function() game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-304, 23, -213) end })
-Tabs.Teleport:AddButton({ Title = "⛽ محطة البنزين (Gas Station)", Callback = function() game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-548, 23, -169) end })
+-- [[ قسم بروكهافن والشغل الثقيل ]]
+local BrookTab = Window:MakeTab({
+    Name = "🏡 بروكهافن",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
 
--- [[ قسم التخريب - الفلينق والقلتشات ]]
-Tabs.Troll:AddButton({ Title = "💥 Admin Fling (أقوى فلينق)", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/DigitalityScripts/mops-hub/main/admin-fling.lua"))() end })
-Tabs.Troll:AddButton({ Title = "🌪️ فلينق الاختفاء", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Invisible%20Fling"))() end })
-Tabs.Troll:AddButton({ Title = "💀 قتل الجميع (Kill All)", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Lucky-Scripter/Main/main/KillAll.lua"))() end })
+BrookTab:AddButton({
+    Name = "🚗 فتح جميع السيارات (VIP)",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/IceSpices/mop-hub/main/Brookhaven.lua"))()
+    end    
+})
 
--- [[ قسم مكتبة الهكرز - دمج جميع صور الهكرز اللي أرسلتها ]]
-Tabs.Global:AddButton({ Title = "💎 EzHub", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/debug101/EzHub/main/EzHub.lua"))() end })
-Tabs.Global:AddButton({ Title = "🐯 Tiger Hub", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Tiger-Hub/Tiger/main/Tiger.lua"))() end })
-Tabs.Global:AddButton({ Title = "💻 System 47", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/System47/System47/main/System47.lua"))() end })
-Tabs.Global:AddButton({ Title = "🐰 Vunny Hub", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/VunnyHub/Vunny/main/Vunny.lua"))() end })
-Tabs.Global:AddButton({ Title = "👻 Ghost Hub", Callback = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/GhostPlayer352/Test4/main/GhostHub'))() end })
-Tabs.Global:AddButton({ Title = "🏮 Tora Is Me", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/ToraIsMe/Tora/main/Tora.lua"))() end })
+BrookTab:AddButton({
+    Name = "🏠 سكربت P_97 المطور",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/p97-sudo/P97-Hub/main/Brookhaven.lua"))()
+    end    
+})
 
-Window:SelectTab(1)
+-- [[ قسم التخريب (Troll) ]]
+local TrollTab = Window:MakeTab({
+    Name = "🌪️ التخريب",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+TrollTab:AddButton({
+    Name = "💥 Admin Fling (طيرهم)",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/DigitalityScripts/mops-hub/main/admin-fling.lua"))()
+    end    
+})
+
+-- [[ قسم السكربتات العالمية ]]
+local GlobalTab = Window:MakeTab({
+    Name = "🌐 مكتبة الهكرز",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+GlobalTab:AddDropdown({
+    Name = "اختر السكربت",
+    Default = "EzHub",
+    Options = {"EzHub", "System47", "Ghost Hub", "Tiger Hub"},
+    Callback = function(Value)
+        if Value == "EzHub" then
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/debug101/EzHub/main/EzHub.lua"))()
+        elseif Value == "System47" then
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/System47/System47/main/System47.lua"))()
+        end
+    end    
+})
+
+OrionLib:Init()
