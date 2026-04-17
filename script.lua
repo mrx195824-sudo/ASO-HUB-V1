@@ -1,37 +1,29 @@
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
-local Window = Fluent:CreateWindow({
-    Title = "👑 ASO HUB",
-    SubTitle = "إصدار النخبة V14",
-    TabWidth = 160,
-    Size = UDim2.fromOffset(580, 460),
-    Acrylic = false, -- إيقاف الشفافية عشان اللون يكون قوي
-    Theme = "Black", -- الثيم الأسود الصافي
-    MinimizeKey = Enum.KeyCode.LeftControl
+local Window = Rayfield:CreateWindow({
+   Name = "👑 ASO HUB | BLACK EDITION",
+   LoadingTitle = "جاري تحميل الواجهة الملكية...",
+   LoadingSubtitle = "بواسطة النينجا",
+   ConfigurationSaving = {
+      Enabled = false
+   },
+   KeySystem = false
 })
 
--- تخصيص الألوان (أزرق ملكي حاد على خلفية سوداء)
-Fluent.Options = {
-    AccentColor = Color3.fromRGB(0, 85, 255),
-    MainColor = Color3.fromRGB(10, 10, 10) -- أسود ملكي فخم
-}
+-- [[ قسم التجربة ]]
+local Tab = Window:CreateTab("تجربة", 4483362458) 
 
--- قسم التجربة (الخط الطويل الجانبي)
-local Tabs = {
-    Main = Window:AddTab({ Title = "تجربة", Icon = "star" })
-}
-
--- الزر اللي طلبته
-Tabs.Main:AddButton({
-    Title = "تجربة القوة",
-    Description = "أقوى مكتبة بأفضل لون",
-    Callback = function()
-        Fluent:Notify({
-            Title = "نجحت!",
-            Content = "هذي هي أقوى مكتبة بأفضل ثيم ممكن.",
-            Duration = 5
-        })
-    end
+Tab:CreateButton({
+   Name = "اضغط هنا (اختبار اللون)",
+   Callback = function()
+      Rayfield:Notify({
+         Title = "تمت التجربة!",
+         Content = "هل اللون الآن أسود صريح كما طلبت؟",
+         Duration = 5,
+         Image = 4483362458,
+      })
+   end,
 })
 
-Window:SelectTab(1)
+-- [[ إعدادات الألوان لإجبار الواجهة على الأسود ]]
+-- Rayfield تمتاز بأن خلفيتها سوداء داكنة جداً ولا تتأثر بالرمادي
