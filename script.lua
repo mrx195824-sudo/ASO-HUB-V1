@@ -1,63 +1,86 @@
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu'))()
+-- [ استدعاء المكتبة الأصلية ]
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
+-- [ إنشاء النافذة الرئيسية بنفس أبعاد GhostHub ]
 local Window = Rayfield:CreateWindow({
-   Name = "GhostHub Clone | الواجهة الملونة",
-   LoadingTitle = "جاري تشغيل السكربت...",
-   LoadingSubtitle = "بواسطة الذكاء الاصطناعي",
+   Name = "✅ MOV9 Hub | Developers: (MOV9_Cloud)",
+   LoadingTitle = "MOV9 LOADING SYSTEM",
+   LoadingSubtitle = "بواسطة MOV9_Cloud",
    ConfigurationSaving = {
       Enabled = true,
-      FolderName = "GhostHubConfigs", 
-      FileName = "CustomHub"
+      FolderName = "MOV9_Configs",
+      FileName = "Main"
    },
    Discord = {
       Enabled = false,
+      Invite = "noinvite",
+      RememberJoins = true
    },
-   KeySystem = false, 
+   KeySystem = false 
 })
 
--- هنا السر: تعديل الألوان لتكون مثل الصورة (وردي وأرجواني)
-Rayfield:Notify({
-   Title = "تم التشغيل!",
-   Content = "الواجهة الآن مخصصة بألوان GhostHub",
-   Duration = 5,
-   Image = 4483362458,
-   Actions = { 
-      Ignore = {
-         Name = "حسناً",
-         Callback = function() end
-      },
-   },
-})
+-- [ إنشاء الأقسام الجانبية بنفس الترتيب ]
+local MusicTab = Window:CreateTab("اغاني منوعة 🎵", 4483362458) -- هذا هو القسم المفتوح بالصورة
+local QuranTab = Window:CreateTab("قرآن 📖", 4483362458)
+local ForeignTab = Window:CreateTab("اجنبيات 🎸", 4483362458)
+local ArabicTab = Window:CreateTab("اغاني عربية 🎶", 4483362458)
 
--- إضافة الأقسام والأزرار
-local Tab = Window:CreateTab("القائمة الرئيسية", 4483362458) -- يمكنك تغيير رقم الأيقونة
+-- [ إضافة الأزرار بنفس الشكل والنجمة ⭐ ]
+local Section = MusicTab:CreateSection("قائمة الأغاني والمنوعات")
 
-local Section = Tab:CreateSection("خيارات الأغاني")
-
-local Button = Tab:CreateButton({
-   Name = "تشغيل شيلات",
+MusicTab:CreateButton({
+   Name = "شيلات  [ ⭐ ]",
    Callback = function()
-       print("تم ضغط الزر!")
+       -- الكود هنا
+       print("تم تشغيل الشيلات")
    end,
 })
 
-local Toggle = Tab:CreateToggle({
-   Name = "وضع الطيران",
-   CurrentValue = false,
-   Flag = "Toggle1", 
-   Callback = function(Value)
-       print("الحالة الآن:", Value)
+MusicTab:CreateButton({
+   Name = "هجولة  [ ⭐ ]",
+   Callback = function()
+       print("تم تفعيل وضع الهجولة")
    end,
 })
 
-local Slider = Tab:CreateSlider({
-   Name = "سرعة اللاعب",
-   Range = {16, 500},
-   Increment = 10,
-   Suffix = "سرعة",
-   CurrentValue = 16,
-   Flag = "Slider1", 
-   Callback = function(Value)
-       game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+MusicTab:CreateButton({
+   Name = "حزين 2  [ ⭐ ]",
+   Callback = function()
+       print("تم تشغيل حزين 2")
    end,
+})
+
+MusicTab:CreateButton({
+   Name = "الحمدلله  [ ⭐ ]",
+   Callback = function()
+       print("الحمدلله")
+   end,
+})
+
+MusicTab:CreateButton({
+   Name = "صلوا على النبي  [ ⭐ ]",
+   Callback = function()
+       print("اللهم صل وسلم على نبينا محمد")
+   end,
+})
+
+-- [ إضافة ميزة السلايدر (نفس نظام السكربتات الاحترافية) ]
+MusicTab:CreateSlider({
+   Name = "صوت الموسيقى",
+   Range = {0, 100},
+   Increment = 1,
+   Suffix = "%",
+   CurrentValue = 50,
+   Flag = "MusicVol",
+   Callback = function(Value)
+      print("مستوى الصوت: "..Value)
+   end,
+})
+
+-- [ إشعار التشغيل ]
+Rayfield:Notify({
+   Title = "تم التفعيل بنجاح!",
+   Content = "واجهة MOV9 مطابقة لـ GhostHub الآن",
+   Duration = 6.5,
+   Image = 4483362458,
 })
