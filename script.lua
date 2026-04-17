@@ -1,76 +1,80 @@
---[[ 
-    SHΔDØW CØRE V99 - ASO EDITION
-    DEVELOPER: ABSI (عبسي) & ASO
-    THEME: BLACK & PURPLE SOLID
-]]
-
 local CoreGui = game:GetService("CoreGui")
-local TweenService = game:GetService("TweenService")
-
--- تنظيف أي نسخ قديمة
-if CoreGui:FindFirstChild("ALFA_TRIAL") then CoreGui.ALFA_TRIAL:Destroy() end
+if CoreGui:FindFirstChild("MOV9_HUB") then CoreGui.MOV9_HUB:Destroy() end
 
 local ScreenGui = Instance.new("ScreenGui", CoreGui)
-ScreenGui.Name = "ALFA_TRIAL"
+ScreenGui.Name = "MOV9_HUB"
 
--- [ زر SR7 العائم ]
+-- [ زر الفتح والإغلاق MOV9 ]
 local ToggleBtn = Instance.new("TextButton", ScreenGui)
-ToggleBtn.Size = UDim2.new(0, 60, 0, 40)
-ToggleBtn.Position = UDim2.new(0.05, 0, 0.4, 0)
-ToggleBtn.BackgroundColor3 = Color3.fromRGB(40, 0, 80)
-ToggleBtn.Text = "SR7"
+ToggleBtn.Size = UDim2.new(0, 70, 0, 40)
+ToggleBtn.Position = UDim2.new(0.02, 0, 0.45, 0)
+ToggleBtn.BackgroundColor3 = Color3.fromRGB(0, 150, 50) -- أخضر داكن
+ToggleBtn.Text = "MOV9"
 ToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 ToggleBtn.Font = Enum.Font.GothamBold
 ToggleBtn.TextSize = 16
+ToggleBtn.Draggable = true
 ToggleBtn.Active = true
-ToggleBtn.Draggable = true -- تقدر تحركه بيدك
 Instance.new("UICorner", ToggleBtn).CornerRadius = UDim.new(0, 8)
 local BStroke = Instance.new("UIStroke", ToggleBtn)
-BStroke.Color = Color3.fromRGB(180, 100, 255)
+BStroke.Color = Color3.fromRGB(0, 255, 100)
 BStroke.Thickness = 2
 
--- [ الواجهة الرئيسية - أسود ملكي صافي ]
+-- [ الواجهة الرئيسية - أسود ملكي ]
 local MainFrame = Instance.new("Frame", ScreenGui)
-MainFrame.Size = UDim2.new(0, 350, 0, 200)
-MainFrame.Position = UDim2.new(0.5, -175, 0.5, -100)
-MainFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 10) -- أسود فحم صريح
-MainFrame.Visible = false -- تبدأ مخفية
-Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 12)
-local MStroke = Instance.new("UIStroke", MainFrame)
-MStroke.Color = Color3.fromRGB(80, 0, 160)
-MStroke.Thickness = 2
+MainFrame.Size = UDim2.new(0, 480, 0, 320)
+MainFrame.Position = UDim2.new(0.5, -240, 0.5, -160)
+MainFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+MainFrame.Visible = false 
+Instance.new("UICorner", MainFrame)
 
--- [ عنوان الواجهة ]
+-- [ شريط البحث - غيمة MOV9 ]
+local SearchBar = Instance.new("TextBox", MainFrame)
+SearchBar.Size = UDim2.new(0.9, 0, 0, 40)
+SearchBar.Position = UDim2.new(0.05, 0, 0, 55)
+SearchBar.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+SearchBar.PlaceholderText = "🔍 ابحث في غيمة MOV9..."
+SearchBar.Text = ""
+SearchBar.TextColor3 = Color3.fromRGB(0, 255, 120)
+SearchBar.Font = Enum.Font.Gotham
+SearchBar.TextSize = 14
+local SCorner = Instance.new("UICorner", SearchBar)
+local SStroke = Instance.new("UIStroke", SearchBar)
+SStroke.Color = Color3.fromRGB(0, 255, 120)
+SStroke.Transparency = 0.6
+
+-- [ العنوان ]
 local Title = Instance.new("TextLabel", MainFrame)
 Title.Size = UDim2.new(1, 0, 0, 45)
-Title.BackgroundColor3 = Color3.fromRGB(20, 0, 40)
-Title.Text = "ASO HUB | TRIAL"
-Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.Text = "ASO HUB | MOV9 CLOUD"
+Title.TextColor3 = Color3.fromRGB(0, 255, 120)
+Title.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
 Title.Font = Enum.Font.GothamBold
 Title.TextSize = 18
-Instance.new("UICorner", Title)
 
--- [ زر تجربة ]
-local TestBtn = Instance.new("TextButton", MainFrame)
-TestBtn.Size = UDim2.new(0, 180, 0, 50)
-TestBtn.Position = UDim2.new(0.5, -90, 0.5, -10)
-TestBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-TestBtn.Text = "تـجـربـة"
-TestBtn.TextColor3 = Color3.fromRGB(200, 150, 255)
-TestBtn.Font = Enum.Font.GothamBold
-TestBtn.TextSize = 18
-Instance.new("UICorner", TestBtn)
+-- [ أزرار ماب بيوت (أخضر هكر) ]
+local function AddButton(name, pos)
+    local btn = Instance.new("TextButton", MainFrame)
+    btn.Size = UDim2.new(0.4, 0, 0, 45)
+    btn.Position = UDim2.new(0.05 + (pos % 2 * 0.5), 0, 0.4 + (math.floor(pos/2) * 0.2), 0)
+    btn.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+    btn.Text = name
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.Font = Enum.Font.GothamBold
+    Instance.new("UICorner", btn)
+    local stroke = Instance.new("UIStroke", btn)
+    stroke.Color = Color3.fromRGB(0, 255, 100)
+    return btn
+end
 
--- [ برمجة الفتح والإغلاق ]
+AddButton("🚗 طيران سيارة", 0)
+AddButton("🏠 قفل المنزل", 1)
+AddButton("💨 سرعة خارقة", 2)
+AddButton("🔑 فتح الأبواب", 3)
+
+-- [ البرمجة ]
 ToggleBtn.MouseButton1Click:Connect(function()
     MainFrame.Visible = not MainFrame.Visible
 end)
 
--- [ حركة الزر عند الضغط ]
-TestBtn.MouseButton1Click:Connect(function()
-    TestBtn.Text = "شـغـال 🔥"
-    TestBtn.BackgroundColor3 = Color3.fromRGB(60, 0, 120)
-    wait(1)
-    TestBtn.Text = "تـجـربـة"
-    TestBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-end)
+print("MOV9 Script Loaded Successfully!")
