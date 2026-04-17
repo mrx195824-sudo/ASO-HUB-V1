@@ -1,29 +1,25 @@
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 
-local Window = Rayfield:CreateWindow({
-   Name = "👑 ASO HUB | BLACK EDITION",
-   LoadingTitle = "جاري تحميل الواجهة الملكية...",
-   LoadingSubtitle = "بواسطة النينجا",
-   ConfigurationSaving = {
-      Enabled = false
-   },
-   KeySystem = false
+-- 1. إعداد النافذة (خلفية سوداء ملكية 100%)
+local Window = Fluent:CreateWindow({
+    Title = "🔥 ASO HUB | ROYAL 👑",
+    SubTitle = "بواسطة النينجا",
+    TabWidth = 170,
+    Size = UDim2.fromOffset(600, 480),
+    Acrylic = false, -- لإلغاء الشفافية وجعل اللون أسود غامق جداً
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl
 })
 
--- [[ قسم التجربة ]]
-local Tab = Window:CreateTab("تجربة", 4483362458) 
+-- تخصيص الألوان الملكية للأزرار والسلايدر
+Fluent.Options.AccentColor = Color3.fromRGB(0, 51, 153)
 
-Tab:CreateButton({
-   Name = "اضغط هنا (اختبار اللون)",
-   Callback = function()
-      Rayfield:Notify({
-         Title = "تمت التجربة!",
-         Content = "هل اللون الآن أسود صريح كما طلبت؟",
-         Duration = 5,
-         Image = 4483362458,
-      })
-   end,
-})
-
--- [[ إعدادات الألوان لإجبار الواجهة على الأسود ]]
--- Rayfield تمتاز بأن خلفيتها سوداء داكنة جداً ولا تتأثر بالرمادي
+-- 2. [ تعديل زر الفتح/الغلق ليصبح MOV9 ]
+local ScreenGui = game:GetService("CoreGui"):FindFirstChild("FluentGui")
+if ScreenGui then
+    local ToggleButton = ScreenGui:FindFirstChild("Toggle")
+    if ToggleButton then
+        ToggleButton.Text = "MOV9"
+        ToggleButton.BackgroundColor3 = Color3.fromRGB(0, 20, 80) -- أزرق غامق
+        ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        ToggleButton.Size = UDim2.new(0,
