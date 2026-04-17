@@ -1,15 +1,13 @@
--- [ استدعاء المكتبة الأصلية ]
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
--- [ إنشاء النافذة الرئيسية بنفس أبعاد GhostHub ]
 local Window = Rayfield:CreateWindow({
    Name = "✅ MOV9 Hub | Developers: (MOV9_Cloud)",
-   LoadingTitle = "MOV9 LOADING SYSTEM",
+   LoadingTitle = "MOV9 Hub System",
    LoadingSubtitle = "بواسطة MOV9_Cloud",
    ConfigurationSaving = {
       Enabled = true,
-      FolderName = "MOV9_Configs",
-      FileName = "Main"
+      FolderName = "MOV9Data",
+      FileName = "MainHub"
    },
    Discord = {
       Enabled = false,
@@ -19,68 +17,48 @@ local Window = Rayfield:CreateWindow({
    KeySystem = false 
 })
 
--- [ إنشاء الأقسام الجانبية بنفس الترتيب ]
-local MusicTab = Window:CreateTab("اغاني منوعة 🎵", 4483362458) -- هذا هو القسم المفتوح بالصورة
+-- [ إنشاء الأقسام بالأيقونات مثل الصورة ]
+local MusicTab = Window:CreateTab("اغاني منوعة 🎵", 4483362458) 
 local QuranTab = Window:CreateTab("قرآن 📖", 4483362458)
 local ForeignTab = Window:CreateTab("اجنبيات 🎸", 4483362458)
 local ArabicTab = Window:CreateTab("اغاني عربية 🎶", 4483362458)
 
--- [ إضافة الأزرار بنفس الشكل والنجمة ⭐ ]
-local Section = MusicTab:CreateSection("قائمة الأغاني والمنوعات")
-
+-- [ الأزرار داخل قسم "اغاني منوعة" ]
 MusicTab:CreateButton({
-   Name = "شيلات  [ ⭐ ]",
+   Name = "[ ⭐ ]  حزين 2",
+   Info = "button", -- الكلمة اللي تظهر على اليمين في الصورة
    Callback = function()
-       -- الكود هنا
-       print("تم تشغيل الشيلات")
+       print("تم اختيار حزين 2")
    end,
 })
 
 MusicTab:CreateButton({
-   Name = "هجولة  [ ⭐ ]",
-   Callback = function()
-       print("تم تفعيل وضع الهجولة")
-   end,
-})
-
-MusicTab:CreateButton({
-   Name = "حزين 2  [ ⭐ ]",
-   Callback = function()
-       print("تم تشغيل حزين 2")
-   end,
-})
-
-MusicTab:CreateButton({
-   Name = "الحمدلله  [ ⭐ ]",
+   Name = "[ ⭐ ]  الحمدلله",
+   Info = "button",
    Callback = function()
        print("الحمدلله")
    end,
 })
 
 MusicTab:CreateButton({
-   Name = "صلوا على النبي  [ ⭐ ]",
+   Name = "[ ⭐ ]  صلوا على النبي",
+   Info = "button",
    Callback = function()
        print("اللهم صل وسلم على نبينا محمد")
    end,
 })
 
--- [ إضافة ميزة السلايدر (نفس نظام السكربتات الاحترافية) ]
+-- [ السلايدر الأزرق - مطابق للصورة ]
 MusicTab:CreateSlider({
    Name = "صوت الموسيقى",
    Range = {0, 100},
    Increment = 1,
    Suffix = "%",
    CurrentValue = 50,
-   Flag = "MusicVol",
+   Flag = "MusicSlider", 
    Callback = function(Value)
-      print("مستوى الصوت: "..Value)
+      -- برمجة الصوت
    end,
 })
 
--- [ إشعار التشغيل ]
-Rayfield:Notify({
-   Title = "تم التفعيل بنجاح!",
-   Content = "واجهة MOV9 مطابقة لـ GhostHub الآن",
-   Duration = 6.5,
-   Image = 4483362458,
-})
+-- [ أيقونات البحث والإعدادات فوق تظهر تلقائياً في Rayfield V2 ]
