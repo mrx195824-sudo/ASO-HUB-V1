@@ -3,10 +3,10 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
    Name = "✅ MOV9 Hub | Developers: (MOV9_Cloud)",
    LoadingTitle = "MOV9 Hub System",
-   LoadingSubtitle = "بواسطة MOV9_Cloud",
+   LoadingSubtitle = "بواوسطة MOV9_Cloud",
    ConfigurationSaving = {
       Enabled = true,
-      FolderName = "MOV9Data",
+      FolderName = "MOV9_Configs",
       FileName = "MainHub"
    },
    Discord = {
@@ -14,51 +14,35 @@ local Window = Rayfield:CreateWindow({
       Invite = "noinvite",
       RememberJoins = true
    },
-   KeySystem = false 
+   KeySystem = false -- خله False عشان يفتح فوراً مثل الصورة
 })
 
--- [ إنشاء الأقسام بالأيقونات مثل الصورة ]
+-- [ إنشاء الأقسام بنفس ترتيب وأيقونات صورتك ]
 local MusicTab = Window:CreateTab("اغاني منوعة 🎵", 4483362458) 
 local QuranTab = Window:CreateTab("قرآن 📖", 4483362458)
 local ForeignTab = Window:CreateTab("اجنبيات 🎸", 4483362458)
 local ArabicTab = Window:CreateTab("اغاني عربية 🎶", 4483362458)
 
--- [ الأزرار داخل قسم "اغاني منوعة" ]
+-- [ إضافة الأزرار داخل القسم ]
+local Section = MusicTab:CreateSection("General") -- مثل كلمة General في الصورة
+
 MusicTab:CreateButton({
-   Name = "[ ⭐ ]  حزين 2",
-   Info = "button", -- الكلمة اللي تظهر على اليمين في الصورة
+   Name = "Rayfield Keybind",
+   Info = "b", -- الحرف اللي يظهر على اليمين
    Callback = function()
-       print("تم اختيار حزين 2")
+       print("تم الضغط على الزر")
    end,
 })
 
-MusicTab:CreateButton({
-   Name = "[ ⭐ ]  الحمدلله",
-   Info = "button",
-   Callback = function()
-       print("الحمدلله")
-   end,
-})
+local Section2 = MusicTab:CreateSection("System") -- مثل كلمة System في الصورة
 
-MusicTab:CreateButton({
-   Name = "[ ⭐ ]  صلوا على النبي",
-   Info = "button",
-   Callback = function()
-       print("اللهم صل وسلم على نبينا محمد")
-   end,
-})
-
--- [ السلايدر الأزرق - مطابق للصورة ]
-MusicTab:CreateSlider({
-   Name = "صوت الموسيقى",
-   Range = {0, 100},
-   Increment = 1,
-   Suffix = "%",
-   CurrentValue = 50,
-   Flag = "MusicSlider", 
+MusicTab:CreateToggle({
+   Name = "Anonymised Analytics",
+   CurrentValue = true,
+   Flag = "Toggle1", 
    Callback = function(Value)
-      -- برمجة الصوت
+       print("الحالة: ", Value)
    end,
 })
 
--- [ أيقونات البحث والإعدادات فوق تظهر تلقائياً في Rayfield V2 ]
+-- [ إضافة زر البحث والإعدادات تظهر تلقائياً في هذا الإصدار ]
