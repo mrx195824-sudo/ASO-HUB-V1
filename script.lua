@@ -1,108 +1,49 @@
-herelocal OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Steventhebest/Venyx-UI-Library/main/Source.lua"))()
+local Venyx = library.new("👑 ASO HUB | THE LAST HOPE", 5013109572)
 
-local Window = OrionLib:MakeWindow({
-    Name = "👑 ASO HUB | CUSTOM PRO", 
-    HidePremium = false, 
-    SaveConfig = true, 
-    ConfigFolder = "ASOCustom",
-    IntroText = "جاري تشغيل نظام النينجا..."
-})
+-- [[ الأقسام ]]
+local PlayerTab = Venyx:addPage("اللاعب", 5012544693)
+local BrookTab = Venyx:addPage("بروكهافن", 5012544693)
+local TrollTab = Venyx:addPage("التخريب", 5012544693)
+local SettingsTab = Venyx:addPage("الألوان", 5012544693)
 
--- [[ قسم التصميم - هنا تتحكم بكل شيء ]]
-local SettingsTab = Window:MakeTab({
-    Name = "🎨 الألوان",
-    Icon = "rbxassetid://4483345998",
-    PremiumOnly = false
-})
+local PlayerSection = PlayerTab:addSection("مميزات اللاعب")
+local BrookSection = BrookTab:addSection("سيارات وبيوت")
+local TrollSection = TrollTab:addSection("قلتشات وفلينق")
+local ColorsSection = SettingsTab:addSection("تغيير الثيم")
 
-SettingsTab:AddColorpicker({
-    Name = "لون الواجهة (Theme)",
-    Default = Color3.fromRGB(0, 51, 153),
-    Callback = function(Value)
-        -- هذا الكود يغير لك الثيم فوراً وأنت تتفرج
-        _G.WindowColor = Value
-        OrionLib:MakeNotification({
-            Name = "تم التغيير!",
-            Content = "اللون الجديد شغال يا بطل",
-            Image = "rbxassetid://4483345998",
-            Time = 3
-        })
-    end	  
-})
+-- [[ 1. قسم اللاعب ]]
+PlayerSection:addSlider("السرعة", 16, 16, 1000, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
 
--- [[ قسم اللاعب ]]
-local PlayerTab = Window:MakeTab({
-    Name = "👤 اللاعب",
-    Icon = "rbxassetid://4483345998",
-    PremiumOnly = false
-})
+PlayerSection:addButton("🚀 طيران (Fly)", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.lua"))()
+end)
 
-PlayerTab:AddSlider({
-    Name = "السرعة",
-    Min = 16,
-    Max = 1000,
-    Default = 16,
-    Color = Color3.fromRGB(255,255,255),
-    Increment = 1,
-    ValueName = "Speed",
-    Callback = function(Value)
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
-    end    
-})
+-- [[ 2. قسم بروكهافن - مدمج فيه كل صورك ]]
+BrookSection:addButton("🚗 فتح السيارات (Mops)", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/IceSpices/mop-hub/main/Brookhaven.lua"))()
+end)
 
--- [[ قسم بروكهافن والشغل الثقيل ]]
-local BrookTab = Window:MakeTab({
-    Name = "🏡 بروكهافن",
-    Icon = "rbxassetid://4483345998",
-    PremiumOnly = false
-})
+BrookSection:addButton("🏠 سكربت P_97 الكامل", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/p97-sudo/P97-Hub/main/Brookhaven.lua"))()
+end)
 
-BrookTab:AddButton({
-    Name = "🚗 فتح جميع السيارات (VIP)",
-    Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/IceSpices/mop-hub/main/Brookhaven.lua"))()
-    end    
-})
+-- [[ 3. قسم التخريب ]]
+TrollSection:addButton("💥 Admin Fling", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/DigitalityScripts/mops-hub/main/admin-fling.lua"))()
+end)
 
-BrookTab:AddButton({
-    Name = "🏠 سكربت P_97 المطور",
-    Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/p97-sudo/P97-Hub/main/Brookhaven.lua"))()
-    end    
-})
+TrollSection:addButton("🌪️ فلينق الاختفاء", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Invisible%20Fling"))()
+end)
 
--- [[ قسم التخريب (Troll) ]]
-local TrollTab = Window:MakeTab({
-    Name = "🌪️ التخريب",
-    Icon = "rbxassetid://4483345998",
-    PremiumOnly = false
-})
+-- [[ 4. قسم الألوان - تحكم كامل بالألوان ]]
+ColorsSection:addColorPicker("لون الأزرار", Color3.fromRGB(0, 51, 153), function(color)
+    Venyx:setTheme("Accent", color)
+end)
 
-TrollTab:AddButton({
-    Name = "💥 Admin Fling (طيرهم)",
-    Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/DigitalityScripts/mops-hub/main/admin-fling.lua"))()
-    end    
-})
+-- افتح أول صفحة تلقائياً
+Venyx:SelectPage(Venyx.pages[1], true)
 
--- [[ قسم السكربتات العالمية ]]
-local GlobalTab = Window:MakeTab({
-    Name = "🌐 مكتبة الهكرز",
-    Icon = "rbxassetid://4483345998",
-    PremiumOnly = false
-})
-
-GlobalTab:AddDropdown({
-    Name = "اختر السكربت",
-    Default = "EzHub",
-    Options = {"EzHub", "System47", "Ghost Hub", "Tiger Hub"},
-    Callback = function(Value)
-        if Value == "EzHub" then
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/debug101/EzHub/main/EzHub.lua"))()
-        elseif Value == "System47" then
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/System47/System47/main/System47.lua"))()
-        end
-    end    
-})
-
-OrionLib:Init()
