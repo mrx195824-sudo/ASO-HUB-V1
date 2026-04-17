@@ -1,48 +1,44 @@
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu'))()
 
 local Window = Rayfield:CreateWindow({
-   Name = "✅ MOV9 Hub | Developers: (MOV9_Cloud)",
-   LoadingTitle = "MOV9 Hub System",
-   LoadingSubtitle = "بواوسطة MOV9_Cloud",
+   Name = "Ravex Style Menu",
+   LoadingTitle = "جاري تحميل السكربت...",
+   LoadingSubtitle = "بواسطة الذكاء الاصطناعي",
    ConfigurationSaving = {
       Enabled = true,
-      FolderName = "MOV9_Configs",
-      FileName = "MainHub"
+      FolderName = "MyRayfieldConfig", 
+      FileName = "Settings"
    },
    Discord = {
       Enabled = false,
-      Invite = "noinvite",
-      RememberJoins = true
+      Invite = "noinviter", 
+      RememberJoins = true 
    },
-   KeySystem = false -- خله False عشان يفتح فوراً مثل الصورة
+   KeySystem = false, -- اجعلها true إذا أردت إضافة نظام مفتاح (Key)
 })
 
--- [ إنشاء الأقسام بنفس ترتيب وأيقونات صورتك ]
-local MusicTab = Window:CreateTab("اغاني منوعة 🎵", 4483362458) 
-local QuranTab = Window:CreateTab("قرآن 📖", 4483362458)
-local ForeignTab = Window:CreateTab("اجنبيات 🎸", 4483362458)
-local ArabicTab = Window:CreateTab("اغاني عربية 🎶", 4483362458)
+-- هذا هو القسم الذي يضيف التبويبات (Tabs)
+local MainTab = Window:CreateTab("الرئيسية", 4483362458) -- أيقونة افتراضية
 
--- [ إضافة الأزرار داخل القسم ]
-local Section = MusicTab:CreateSection("General") -- مثل كلمة General في الصورة
-
-MusicTab:CreateButton({
-   Name = "Rayfield Keybind",
-   Info = "b", -- الحرف اللي يظهر على اليمين
+-- إضافة زر (Button) للتجربة
+local Button = MainTab:CreateButton({
+   Name = "تفعيل الميزة الأولى",
    Callback = function()
-       print("تم الضغط على الزر")
+       -- هنا تضع الكود الذي تريد تشغيله عند الضغط
+       Rayfield:Notify({
+          Title = "تم التشغيل!",
+          Content = "السكربت يعمل الآن بالواجهة الملونة",
+          Duration = 5,
+          Image = 4483362458,
+          Actions = {
+             Ignore = {
+                Name = "حسناً",
+                Callback = function() print("User clicked OK") end
+             },
+          },
+       })
    end,
 })
 
-local Section2 = MusicTab:CreateSection("System") -- مثل كلمة System في الصورة
-
-MusicTab:CreateToggle({
-   Name = "Anonymised Analytics",
-   CurrentValue = true,
-   Flag = "Toggle1", 
-   Callback = function(Value)
-       print("الحالة: ", Value)
-   end,
-})
-
--- [ إضافة زر البحث والإعدادات تظهر تلقائياً في هذا الإصدار ]
+-- لتغيير اللون يدوياً إذا لم تعجبك السمة الجاهزة، يمكنك استخدام هذا السطر:
+-- Rayfield:Notify({Title = "تنبيه", Content = "استمتع بالواجهة الجديدة!"})
