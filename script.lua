@@ -1,36 +1,35 @@
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 
 local Window = Fluent:CreateWindow({
-    Title = "👑 ASO HUB | PRO TEST",
-    SubTitle = "بواسطة النينجا",
+    Title = "👑 ASO HUB",
+    SubTitle = "إصدار النخبة V14",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
-    Acrylic = false, 
-    Theme = "Dark", 
+    Acrylic = false, -- إيقاف الشفافية عشان اللون يكون قوي
+    Theme = "Black", -- الثيم الأسود الصافي
     MinimizeKey = Enum.KeyCode.LeftControl
 })
 
--- تخصيص اللون للأزرق الملكي المريح للعين
-Fluent.Options = { AccentColor = Color3.fromRGB(0, 51, 153) }
-
--- إضافة الأقسام (الخطوط الطويلة الجانبية)
-local Tabs = {
-    Main = Window:AddTab({ Title = "التجربة", Icon = "play" }),
-    Settings = Window:AddTab({ Title = "الإعدادات", Icon = "settings" })
+-- تخصيص الألوان (أزرق ملكي حاد على خلفية سوداء)
+Fluent.Options = {
+    AccentColor = Color3.fromRGB(0, 85, 255),
+    MainColor = Color3.fromRGB(10, 10, 10) -- أسود ملكي فخم
 }
 
--- إضافة الزر اللي طلبته
+-- قسم التجربة (الخط الطويل الجانبي)
+local Tabs = {
+    Main = Window:AddTab({ Title = "تجربة", Icon = "star" })
+}
+
+-- الزر اللي طلبته
 Tabs.Main:AddButton({
-    Title = "زر تجربة",
-    Description = "اضغط هنا لاختبار الواجهة",
+    Title = "تجربة القوة",
+    Description = "أقوى مكتبة بأفضل لون",
     Callback = function()
-        Window:Dialog({
-            Title = "نجحت التجربة!",
-            Content = "الواجهة تعمل الآن بنفس التصميم الذي طلبته. هل نستمر؟",
-            Buttons = {
-                { Title = "استمرار", Callback = function() print("مستعدون!") end },
-                { Title = "إلغاء", Callback = function() print("تم الإلغاء") end }
-            }
+        Fluent:Notify({
+            Title = "نجحت!",
+            Content = "هذي هي أقوى مكتبة بأفضل ثيم ممكن.",
+            Duration = 5
         })
     end
 })
