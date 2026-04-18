@@ -1,34 +1,52 @@
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+-- [ استدعاء مكتبة Redz V5 الأصلية ]
+local RedzLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/RHEZSN/Redz-Library/refs/heads/main/Source.lua"))()
 
-local Window = Rayfield:CreateWindow({
-   Name = "✅ GhostHub | Developers: (Ghost, Rami)", -- نفس الاسم في الصورة
-   LoadingTitle = "MOV9 LOADING...",
-   LoadingSubtitle = "بواسطة MOV9_Cloud",
-   ConfigurationSaving = {
-      Enabled = true,
-      FolderName = "GhostHubConfig",
-      FileName = "MainConfig"
-   },
-   -- [ السطر السحري اللي بحثت عنه في جوجل ]
-   Theme = "Amethyst", -- هذا اللي يخلي الخلفية نفس صورتك بالضبط
-   KeySystem = false 
+-- [ إنشاء النافذة الرئيسية ]
+local Window = RedzLib:MakeWindow({
+  Title = "MOV9 Hub | Brookhaven",
+  SubTitle = "بواسطة MOV9_Cloud",
+  SaveFolder = "MOV9_Config"
 })
 
--- إنشاء الأقسام الجانبية مثل الصورة
-local MusicTab = Window:CreateTab("اغاني منوعة 🎵", 4483362458)
-local QuranTab = Window:CreateTab("قرآن 📖", 4483362458)
+-- [ إضافة الأقسام الجانبية - Tabs ]
+local MainTab = Window:CreateTab("🏠 الرئيسية", "rbxassetid://4483362458")
+local MusicTab = Window:CreateTab("🎵 أغاني منوعة", "rbxassetid://4483362458")
 
--- إضافة الأزرار مع النجمة ⭐
-MusicTab:CreateButton({
-   Name = "حزين 2 [ ⭐ ]",
-   Callback = function()
-       print("تم التشغيل")
-   end,
+-- [ إضافة العناوين والأزرار داخل قسم الأغاني ]
+MusicTab:AddSection("قائمة الأغاني والمنوعات")
+
+MusicTab:AddButton({
+  Name = "شيلات  [ ⭐ ]",
+  Callback = function()
+      print("تم تشغيل الشيلات")
+  end
 })
 
-MusicTab:CreateButton({
-   Name = "صلوا على النبي [ ⭐ ]",
-   Callback = function()
-       print("اللهم صل وسلم على نبينا محمد")
-   end,
+MusicTab:AddButton({
+  Name = "حزين 2  [ ⭐ ]",
+  Callback = function()
+      print("تم تشغيل حزين 2")
+  end
+})
+
+-- [ إضافة سلايدر السرعة بنفس شكل V5 ]
+MusicTab:AddSlider({
+  Name = "سرعة اللاعب",
+  Min = 16,
+  Max = 500,
+  Default = 16,
+  Color = Color3.fromRGB(0, 150, 255), -- اللون الأزرق اللي في الصورة
+  Increment = 1,
+  Callback = function(Value)
+      game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+  end
+})
+
+-- [ إضافة التوقل (Toggle) ]
+MusicTab:AddToggle({
+  Name = "تفعيل تلقائي",
+  Default = false,
+  Callback = function(Value)
+      print("الحالة: ", Value)
+  end
 })
