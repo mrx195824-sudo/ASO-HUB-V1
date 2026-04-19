@@ -1,52 +1,66 @@
--- [ استدعاء مكتبة Redz V5 الأصلية ]
-local RedzLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/RHEZSN/Redz-Library/refs/heads/main/Source.lua"))()
+-- [ إنشاء الواجهة من الصفر ]
+local ScreenGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local TopBar = Instance.new("Frame")
+local CloseBtn = Instance.new("TextButton")
+local MinBtn = Instance.new("TextButton")
+local ContentFrame = Instance.new("Frame")
 
--- [ إنشاء النافذة الرئيسية ]
-local Window = RedzLib:MakeWindow({
-  Title = "MOV9 Hub | Brookhaven",
-  SubTitle = "بواسطة MOV9_Cloud",
-  SaveFolder = "MOV9_Config"
-})
+ScreenGui.Parent = game.CoreGui
+ScreenGui.Name = "MOV9_Custom_UI"
 
--- [ إضافة الأقسام الجانبية - Tabs ]
-local MainTab = Window:CreateTab("🏠 الرئيسية", "rbxassetid://4483362458")
-local MusicTab = Window:CreateTab("🎵 أغاني منوعة", "rbxassetid://4483362458")
+-- [ الإطار الرئيسي - نفس حجم ومكان الصورة ]
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+MainFrame.BackgroundTransparency = 0.2 -- شفافية تعطيك مظهر "مب صورة"
+MainFrame.Position = UDim2.new(0.3, 0, 0.25, 0)
+MainFrame.Size = UDim2.new(0, 450, 0, 280) -- الحجم المتوسط المريح
+MainFrame.BorderSizePixel = 0
+MainFrame.Active = true
+MainFrame.Draggable = true -- تقدر تحركه بيدك في الشاشة
 
--- [ إضافة العناوين والأزرار داخل قسم الأغاني ]
-MusicTab:AddSection("قائمة الأغاني والمنوعات")
+-- زوايا منحنية (Round Corners)
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 10)
+MainCorner.Parent = MainFrame
 
-MusicTab:AddButton({
-  Name = "شيلات  [ ⭐ ]",
-  Callback = function()
-      print("تم تشغيل الشيلات")
-  end
-})
+-- [ شريط التحكم العلوي - للأزرار فقط ]
+TopBar.Name = "TopBar"
+TopBar.Parent = MainFrame
+TopBar.BackgroundTransparency = 1
+TopBar.Size = UDim2.new(1, 0, 0, 30)
 
-MusicTab:AddButton({
-  Name = "حزين 2  [ ⭐ ]",
-  Callback = function()
-      print("تم تشغيل حزين 2")
-  end
-})
+-- زر الإغلاق (X)
+CloseBtn.Name = "Close"
+CloseBtn.Parent = TopBar
+CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+CloseBtn.BackgroundTransparency = 0.5
+CloseBtn.Position = UDim2.new(0.92, 0, 0.2, 0)
+CloseBtn.Size = UDim2.new(0, 25, 0, 20)
+CloseBtn.Text = "X"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.Font = Enum.Font.GothamBold
 
--- [ إضافة سلايدر السرعة بنفس شكل V5 ]
-MusicTab:AddSlider({
-  Name = "سرعة اللاعب",
-  Min = 16,
-  Max = 500,
-  Default = 16,
-  Color = Color3.fromRGB(0, 150, 255), -- اللون الأزرق اللي في الصورة
-  Increment = 1,
-  Callback = function(Value)
-      game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
-  end
-})
+-- زر التصغير (-)
+MinBtn.Name = "Minimize"
+MinBtn.Parent = TopBar
+MinBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+MinBtn.BackgroundTransparency = 0.5
+MinBtn.Position = UDim2.new(0.85, 0, 0.2, 0)
+MinBtn.Size = UDim2.new(0, 25, 0, 20)
+MinBtn.Text = "-"
+MinBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+MinBtn.Font = Enum.Font.GothamBold
 
--- [ إضافة التوقل (Toggle) ]
-MusicTab:AddToggle({
-  Name = "تفعيل تلقائي",
-  Default = false,
-  Callback = function(Value)
-      print("الحالة: ", Value)
-  end
-})
+-- [ مكان وضع المحتوى - شفاف ]
+ContentFrame.Name = "Content"
+ContentFrame.Parent = MainFrame
+ContentFrame.BackgroundTransparency = 1
+ContentFrame.Position = UDim2.new(0, 0, 0.15, 0)
+ContentFrame.Size = UDim2.new(1, 0, 0.85, 0)
+
+-- برمجة زر الإغلاق
+CloseBtn.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
