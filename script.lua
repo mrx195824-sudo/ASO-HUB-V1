@@ -1,66 +1,61 @@
--- [ إنشاء الواجهة من الصفر ]
 local ScreenGui = Instance.new("ScreenGui")
 local MainFrame = Instance.new("Frame")
-local TopBar = Instance.new("Frame")
+local MyImage = Instance.new("ImageLabel")
 local CloseBtn = Instance.new("TextButton")
 local MinBtn = Instance.new("TextButton")
-local ContentFrame = Instance.new("Frame")
 
 ScreenGui.Parent = game.CoreGui
-ScreenGui.Name = "MOV9_Custom_UI"
+ScreenGui.Name = "MOV9_Brookhaven_UI"
+ScreenGui.ResetOnSpawn = false
 
--- [ الإطار الرئيسي - نفس حجم ومكان الصورة ]
-MainFrame.Name = "MainFrame"
+-- [ الإطار الرئيسي - حجم Ravex الصغير ]
 MainFrame.Parent = ScreenGui
-MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-MainFrame.BackgroundTransparency = 0.2 -- شفافية تعطيك مظهر "مب صورة"
-MainFrame.Position = UDim2.new(0.3, 0, 0.25, 0)
-MainFrame.Size = UDim2.new(0, 450, 0, 280) -- الحجم المتوسط المريح
-MainFrame.BorderSizePixel = 0
+MainFrame.Size = UDim2.new(0, 420, 0, 260) 
+MainFrame.Position = UDim2.new(0.35, 0, 0.3, 0)
+MainFrame.BackgroundTransparency = 1 
 MainFrame.Active = true
-MainFrame.Draggable = true -- تقدر تحركه بيدك في الشاشة
+MainFrame.Draggable = true 
 
--- زوايا منحنية (Round Corners)
-local MainCorner = Instance.new("UICorner")
-MainCorner.CornerRadius = UDim.new(0, 10)
-MainCorner.Parent = MainFrame
+-- [ وضع صورتك اللي رفعتها ]
+MyImage.Parent = MainFrame
+MyImage.Size = UDim2.new(1, 0, 1, 0)
+MyImage.BackgroundTransparency = 1
+MyImage.Image = "rbxassetid://121390048608932" 
+MyImage.ScaleType = Enum.ScaleType.Fill
 
--- [ شريط التحكم العلوي - للأزرار فقط ]
-TopBar.Name = "TopBar"
-TopBar.Parent = MainFrame
-TopBar.BackgroundTransparency = 1
-TopBar.Size = UDim2.new(1, 0, 0, 30)
+-- زوايا منحنية فخمة
+local Corner = Instance.new("UICorner")
+Corner.CornerRadius = UDim.new(0, 12)
+Corner.Parent = MyImage
 
--- زر الإغلاق (X)
-CloseBtn.Name = "Close"
-CloseBtn.Parent = TopBar
-CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
-CloseBtn.BackgroundTransparency = 0.5
-CloseBtn.Position = UDim2.new(0.92, 0, 0.2, 0)
-CloseBtn.Size = UDim2.new(0, 25, 0, 20)
+-- [ زر القفل X ]
+CloseBtn.Parent = MainFrame
+CloseBtn.BackgroundColor3 = Color3.fromRGB(180, 50, 50)
+CloseBtn.Position = UDim2.new(0.91, 0, 0.04, 0)
+CloseBtn.Size = UDim2.new(0, 26, 0, 24)
 CloseBtn.Text = "X"
 CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 CloseBtn.Font = Enum.Font.GothamBold
 
--- زر التصغير (-)
-MinBtn.Name = "Minimize"
-MinBtn.Parent = TopBar
-MinBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-MinBtn.BackgroundTransparency = 0.5
-MinBtn.Position = UDim2.new(0.85, 0, 0.2, 0)
-MinBtn.Size = UDim2.new(0, 25, 0, 20)
+local BtnCorner1 = Instance.new("UICorner")
+BtnCorner1.CornerRadius = UDim.new(0, 6)
+BtnCorner1.Parent = CloseBtn
+
+-- [ زر التصغير - ]
+MinBtn.Parent = MainFrame
+MinBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+MinBtn.Position = UDim2.new(0.83, 0, 0.04, 0)
+MinBtn.Size = UDim2.new(0, 26, 0, 24)
 MinBtn.Text = "-"
 MinBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 MinBtn.Font = Enum.Font.GothamBold
 
--- [ مكان وضع المحتوى - شفاف ]
-ContentFrame.Name = "Content"
-ContentFrame.Parent = MainFrame
-ContentFrame.BackgroundTransparency = 1
-ContentFrame.Position = UDim2.new(0, 0, 0.15, 0)
-ContentFrame.Size = UDim2.new(1, 0, 0.85, 0)
+local BtnCorner2 = Instance.new("UICorner")
+BtnCorner2.CornerRadius = UDim.new(0, 6)
+BtnCorner2.Parent = MinBtn
 
--- برمجة زر الإغلاق
-CloseBtn.MouseButton1Click:Connect(function()
-    ScreenGui:Destroy()
+-- برمجة الأزرار
+CloseBtn.MouseButton1Click:Connect(function() ScreenGui:Destroy() end)
+MinBtn.MouseButton1Click:Connect(function() 
+    MyImage.Visible = not MyImage.Visible 
 end)
