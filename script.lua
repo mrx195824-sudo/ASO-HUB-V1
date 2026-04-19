@@ -1,54 +1,32 @@
--- تنظيف أي نسخة قديمة
-for _, v in pairs(game.CoreGui:GetChildren()) do
-    if v.Name == "MOV9_Hub_Final" then v:Destroy() end
+-- سوي Execute لهذا الكود داخل الهاك وأنت في ماب البيوت
+local player = game.Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+
+-- [ 1. نظام الحقن في واجهة الماب ]
+-- هذا الكود يحاول يضيف زر "MOV9" داخل القائمة الأصلية للماب
+pcall(function()
+    local SideMenu = player.PlayerGui:WaitForChild("MainGui"):WaitForChild("SideMenu")
+    local CopyButton = SideMenu:WaitForChild("Home"):Clone()
+    CopyButton.Parent = SideMenu
+    CopyButton.Name = "MOV9_Inject"
+    CopyButton.Text = "COPY"
+    CopyButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+end)
+
+-- [ 2. وظيفة نسخ السكن "الحقن المباشر" ]
+-- هذي الوظيفة تنسخ أي لاعب تضغط عليه في الماب
+local function InjectAndCopy(targetPlayer)
+    if targetPlayer and targetPlayer:IsA("Player") then
+        -- استخدام نظام الـ HumanoidDescription لحقن الملابس
+        local targetDesc = game.Players:GetHumanoidDescriptionFromUserId(targetPlayer.UserId)
+        player.Character.Humanoid:ApplyDescription(targetDesc)
+        
+        -- إشعار بالحقن الناجح
+        print("تم حقن سكن " .. targetPlayer.Name .. " في شخصيتك!")
+    end
 end
 
-local ScreenGui = Instance.new("ScreenGui")
-local MainFrame = Instance.new("Frame")
-local MyImage = Instance.new("ImageLabel")
-local CloseBtn = Instance.new("TextButton")
-
-ScreenGui.Parent = game:GetService("CoreGui")
-ScreenGui.Name = "MOV9_Hub_Final"
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
--- [ الإطار الرئيسي ]
-MainFrame.Parent = ScreenGui
-MainFrame.Size = UDim2.new(0, 420, 0, 260) 
-MainFrame.Position = UDim2.new(0.5, -210, 0.5, -130) -- في منتصف الشاشة
-MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-MainFrame.BorderSizePixel = 0
-MainFrame.Active = true
-MainFrame.Draggable = true 
-
-local Corner = Instance.new("UICorner")
-Corner.CornerRadius = UDim.new(0, 15)
-Corner.Parent = MainFrame
-
--- [ عرض صورتك بالرقم الجديد ]
-MyImage.Parent = MainFrame
-MyImage.Size = UDim2.new(1, 0, 1, 0)
-MyImage.BackgroundTransparency = 1
-MyImage.Image = "rbxassetid://103960116632767" -- الرقم اللي استخرجته أنت
-MyImage.ScaleType = Enum.ScaleType.Fill
-
-local ImgCorner = Instance.new("UICorner")
-ImgCorner.CornerRadius = UDim.new(0, 15)
-ImgCorner.Parent = MyImage
-
--- [ زر القفل X ]
-CloseBtn.Parent = MainFrame
-CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
-CloseBtn.Position = UDim2.new(0.9, 0, 0.05, 0)
-CloseBtn.Size = UDim2.new(0, 30, 0, 25)
-CloseBtn.Text = "X"
-CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-CloseBtn.Font = Enum.Font.GothamBold
-
-local BtnCorner = Instance.new("UICorner")
-BtnCorner.CornerRadius = UDim.new(0, 5)
-BtnCorner.Parent = CloseBtn
-
-CloseBtn.MouseButton1Click:Connect(function() 
-    ScreenGui:Destroy() 
-end)
+-- [ 3. طريقة التشغيل ]
+-- الحين تقدر تكتب اسم اللاعب اللي تبي تحقنه في الـ Console
+-- أو نستخدم زر النسخ العشوائي اللي سويناه قبل
+InjectAndCopy(game.Players:GetPlayers()[math.random(1, #game.Players:GetPlayers())])
