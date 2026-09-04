@@ -1,53 +1,53 @@
--- [ ASO ADVANCED KINEMATIC RIG REPLICATION ENGINE - SECURE CORE ]
--- AUTHOR: SYSTEM_ARCHITECT
--- TARGET: ROBLOX RUNTIME ENVIRONMENT (LUA/LUAU)
-
-local CoreGui = game:GetService("CoreGui")
+-- [ ASO DYNAMIC PHYSICS EXTRACTION & RIG KINEMATICS ENGINE ]
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
 local LocalPlayer = Players.LocalPlayer
-local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 
-getgenv().ASO_AdvancedRigSystem = getgenv().ASO_AdvancedRigSystem or {}
-if getgenv().ASO_AdvancedRigSystem.Connection then
-    getgenv().ASO_AdvancedRigSystem.Connection:Disconnect()
-    getgenv().ASO_AdvancedRigSystem.Connection = nil
-end
+local function PullAndAssembleEnvironmentRig()
+    local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart", 10)
+    if not hrp then return end
 
-local function InitializeComplexRigPipeline()
-    local RigModel = Instance.new("Model")
-    RigModel.Name = "ASO_Synthetic_ExoRig"
-    RigModel.Parent = workspace
+    if getgenv().ASO_PhysicsRigConnection then
+        getgenv().ASO_PhysicsRigConnection:Disconnect()
+    end
 
-    local PrimaryNode = Instance.new("Part")
-    PrimaryNode.Name = "CoreRoot"
-    PrimaryNode.Size = Vector3.new(5, 8, 3)
-    PrimaryNode.Material = Enum.Material.Neon
-    PrimaryNode.Color = Color3.fromRGB(15, 15, 25)
-    PrimaryNode.CFrame = HumanoidRootPart.CFrame * CFrame.new(0, 0, -6)
-    PrimaryNode.CanCollide = false
-    PrimaryNode.Parent = RigModel
-
-    local SelectionBox = Instance.new("SelectionBox")
-    SelectionBox.Adornee = PrimaryNode
-    SelectionBox.Color3 = Color3.fromRGB(120, 0, 255)
-    SelectionBox.Parent = PrimaryNode
-
-    local RenderSteppedConnection = RunService.RenderStepped:Connect(function(DeltaTime)
-        if not Character or not Character:FindFirstChild("HumanoidRootPart") then
-            RigModel:Destroy()
-            return
+    local CollectedParts = {}
+    
+    -- البحث في الماب عن قطع قريبة قابلة للسحب وليست ثابتة
+    for _, obj in ipairs(workspace:GetDescendants()) do
+        if obj:IsA("Part") and not obj.Anchored and obj.Size.Magnitude < 10 and #CollectedParts < 4 then
+            local dist = (obj.Position - hrp.Position).Magnitude
+            if dist < 60 then
+                pcall(function()
+                    obj:SetNetworkOwner(LocalPlayer)
+                    table.insert(CollectedParts, obj)
+                end)
+            end
         end
+    end
 
-        local TargetCFrame = HumanoidRootPart.CFrame * CFrame.new(0, 0, -6)
-        PrimaryNode.CFrame = PrimaryNode.CFrame:Lerp(TargetCFrame, DeltaTime * 25)
+    -- ربط القطع المسحوبة بحركة الشخصية لتكون الهيكل
+    getgenv().ASO_PhysicsRigConnection = RunService.RenderStepped:Connect(function()
+        if not character or not character:FindFirstChild("HumanoidRootPart") then return end
+        
+        local offsets = {
+            CFrame.new(3, 0, 0),
+            CFrame.new(-3, 0, 0),
+            CFrame.new(0, 4, 0),
+            CFrame.new(0, -3, 0)
+        }
+
+        for i, part in ipairs(CollectedParts) do
+            if part and part.Parent and offsets[i] then
+                pcall(function()
+                    part.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+                    part.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+                    part.CFrame = hrp.CFrame * offsets[i]
+                end)
+            end
+        end
     end)
-
-    getgenv().ASO_AdvancedRigSystem.Connection = RenderSteppedConnection
-    getgenv().ASO_AdvancedRigSystem.Instance = RigModel
 end
 
-InitializeComplexRigPipeline()
+PullAndAssembleEnvironmentRig()
