@@ -1,56 +1,53 @@
--- استدعاء مكتبة الواجهات Rayfield UI
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+-- [ ASO ADVANCED KINEMATIC RIG REPLICATION ENGINE - SECURE CORE ]
+-- AUTHOR: SYSTEM_ARCHITECT
+-- TARGET: ROBLOX RUNTIME ENVIRONMENT (LUA/LUAU)
 
--- إنشاء النافذة الرئيسية
-local Window = Rayfield:CreateWindow({
-   Name = "Mickey Chat | Spam Bot",
-   LoadingTitle = "جارِ التحميل...",
-   LoadingSubtitle = "بواسطة GitHub",
-   ConfigurationSaving = {
-      Enabled = false,
-   },
-   KeySystem = false, 
-})
+local CoreGui = game:GetService("CoreGui")
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
--- إنشاء تاب (صفحة) للتحكم
-local Tab = Window:CreateTab("السبام", 4483362458)
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 
--- متغيرات التحكم
-local spamText = "كلاب"
-local isSpamming = false
+getgenv().ASO_AdvancedRigSystem = getgenv().ASO_AdvancedRigSystem or {}
+if getgenv().ASO_AdvancedRigSystem.Connection then
+    getgenv().ASO_AdvancedRigSystem.Connection:Disconnect()
+    getgenv().ASO_AdvancedRigSystem.Connection = nil
+end
 
--- خانة لتغيير الكلام اللي تبي ترسله
-Tab:CreateInput({
-   Name = "نص الرسالة",
-   PlaceholderText = "اكتب الكلام هنا...",
-   RemoveFocusTextOnFocusLost = false,
-   Callback = function(Text)
-      spamText = Text
-   end,
-})
+local function InitializeComplexRigPipeline()
+    local RigModel = Instance.new("Model")
+    RigModel.Name = "ASO_Synthetic_ExoRig"
+    RigModel.Parent = workspace
 
--- زر التشغيل والإيقاف (Toggle)
-Tab:CreateToggle({
-   Name = "تشغيل / إيقاف السبام",
-   CurrentValue = false,
-   Flag = "SpamToggle",
-   Callback = function(Value)
-      isSpamming = Value
-      
-      if isSpamming then
-         task.spawn(function()
-            while isSpamming do
-               pcall(function()
-                  local args = {
-                      [1] = spamText,
-                      [2] = "All"
-                  }
-                  game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest"):FireServer(unpack(args))
-               end)
-               -- سرعة عالية بدون تأخير للوصول لأقصى سرعة ممكنة
-               task.defer(function() end)
-            end
-         end)
-      end
-   end,
-})
+    local PrimaryNode = Instance.new("Part")
+    PrimaryNode.Name = "CoreRoot"
+    PrimaryNode.Size = Vector3.new(5, 8, 3)
+    PrimaryNode.Material = Enum.Material.Neon
+    PrimaryNode.Color = Color3.fromRGB(15, 15, 25)
+    PrimaryNode.CFrame = HumanoidRootPart.CFrame * CFrame.new(0, 0, -6)
+    PrimaryNode.CanCollide = false
+    PrimaryNode.Parent = RigModel
+
+    local SelectionBox = Instance.new("SelectionBox")
+    SelectionBox.Adornee = PrimaryNode
+    SelectionBox.Color3 = Color3.fromRGB(120, 0, 255)
+    SelectionBox.Parent = PrimaryNode
+
+    local RenderSteppedConnection = RunService.RenderStepped:Connect(function(DeltaTime)
+        if not Character or not Character:FindFirstChild("HumanoidRootPart") then
+            RigModel:Destroy()
+            return
+        end
+
+        local TargetCFrame = HumanoidRootPart.CFrame * CFrame.new(0, 0, -6)
+        PrimaryNode.CFrame = PrimaryNode.CFrame:Lerp(TargetCFrame, DeltaTime * 25)
+    end)
+
+    getgenv().ASO_AdvancedRigSystem.Connection = RenderSteppedConnection
+    getgenv().ASO_AdvancedRigSystem.Instance = RigModel
+end
+
+InitializeComplexRigPipeline()
